@@ -25,36 +25,40 @@ This library is highly suitable for building business bots, chat automation syst
 
 ---
 
+## Development Status
+
+This repository is under active development.  
+Updates are focused on maintaining compatibility with recent WhatsApp changes, improving connection stability, and refining internal logic related to pairing and session persistence.
+
+Most changes are incremental and aimed at long-running stability rather than experimental features.
+
+---
+
 ## Getting Started
 
 Begin by installing the library via your preferred package manager, then follow the provided configuration guide. You can also utilize the ready-made example codes to understand how the features work. Use session storage and interactive messaging features to build complete, stable solutions tailored to your business or project needs.
 
 ## How To Usage?
 ```json
-"depencies": {
-  "@whiskeysockets/baileys": "github:kayzennotdev/bail"
+"dependencies": {
+  "@whiskeysockets/baileys": "github:dilxzcode/bails"
 }
 ```
 ## Import
 ```javascript
 const {
-  default:makeWASocket,
-  // Other Options 
-} = require('@whiskeysockets/baileys');
+  default: makeWASocket
+} = require("@whiskeysockets/baileys");
 ```
 
 ---
 # How To Connect To Whatsapp
 ## With QR Code
 ```javascript
-const {
-  default: makeWASocket
-} = require('@whiskeysockets/baileys');
-
 const client = makeWASocket({
-  browser: ['Ubuntu', 'Chrome', '20.00.1'],
+  browser: ["Ubuntu", "Chrome", "20.0.0"],
   printQRInTerminal: true
-})
+});
 ```
 
 ## Connect With Number
@@ -62,19 +66,18 @@ const client = makeWASocket({
 const {
   default: makeWASocket,
   fetchLatestWAWebVersion
-} = require('@whiskeysockets/baileys');
+} = require("@whiskeysockets/baileys");
 
 const client = makeWASocket({
-  browser: ['Ubuntu', 'Chrome', '20.00.1'],
+  browser: ["Ubuntu", "Chrome", "20.0.0"],
   printQRInTerminal: false,
   version: fetchLatestWAWebVersion()
-  // Other options
 });
 
-const number = "628XXXXX";
-const code = await client.requestPairingCode(number.trim) /* Use : (number, "YYYYYYYY") for custom-pairing */
+const number = "628XXXXXXXXX";
+const code = await client.requestPairingCode(number.trim());
 
-console.log("Ur pairing code : " + code)
+console.log("Pairing Code:", code);
 ```
 
 # Sending messages
@@ -82,72 +85,67 @@ console.log("Ur pairing code : " + code)
 ## send orderMessage
 ```javascript
 const fs = require('fs');
-const nameImg = fs.readFileSync('./YourImage');
+const nameImg = fs.readFileSync('./Image');
 
 await client.sendMessage(m.chat, {
-  thumbnail: YourImg,
-  message: "Gotta get a grip",
-  orderTitle: "HaveANiceDay",
+  thumbnail: nameImg,
+  message: "Example order message",
+  orderTitle: "Example Order",
   totalAmount1000: 8888,
   totalCurrencyCode: "IDR"
-}, { quoted:m })
+}, { quoted: m });
 ```
 
 ## send pollResultSnapshotMessage
 ```javascript
 await client.sendMessage(m.chat, {
   pollResultMessage: {
-    name: "n",
+    name: "Example Poll Result",
     options: [
-      {
-        optionName: "poll 1"
-      },
-      {
-        optionName: "poll 2"
-      }
+      { optionName: "Option A" },
+      { optionName: "Option B" }
     ],
     newsletter: {
-      newsletterName: "Kayzennotdev",
+      newsletterName: "Example Newsletter",
       newsletterJid: "1@newsletter"
     }
   }
-})
+});
 ```
 
 ## send productMessage
 ```javascript
 await client.relayMessage(m.chat, {
-  productMessage {
-    title: "",
-    description: "zZZ...",
-    thumbnail: { url: "./YourImage" },
-    productId: "EXAMPLE_TOKEN",
-    retailerId: "EXAMPLE_RETAILER_ID",
-    url: "https://t.me/kayzennotdev",
-    body: "Nak Tido",
-    footer: "Footer",
+  productMessage: {
+    title: "Example Product",
+    description: "Product description example",
+    thumbnail: { url: "./example.jpg" },
+    productId: "PRODUCT_ID",
+    retailerId: "RETAILER_ID",
+    url: "https://example.com",
+    body: "Product body text",
+    footer: "Example footer",
     buttons: [
       {
         name: "cta_url",
-        buttonParamsJson: "{\"display_text\":\"kayzen\",\"url\":\"https://t.me/kayzennotdev\"}"
+        buttonParamsJson: JSON.stringify({
+          display_text: "Open Link",
+          url: "https://example.com"
+        })
       }
     ],
-    priceAmount1000: 72502,
+    priceAmount1000: 50000,
     currencyCode: "IDR"
   }
-})
+});
 ```
 ## Thanks For Support
 ```javascript
-const thanksFor = async () => {
-  const credit = new Map([
-    ["kayzen", ""],
-    ["Gupong", "source my fork"],
-    ["yuukey", "main source baileys ( maybe )"]
-  ]);
-
-  return Object.fromEntries(credit);
+const credits = {
+  author: "dilxz",
+  source: "kiuur",
+  reference: "yuukey"
 };
+
+module.exports = credits;
 ```
-
-
